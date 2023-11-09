@@ -8,7 +8,7 @@ class Random
 {
 public:
     Random() { _SetSeed(HAL_GetUIDw0()); }
-    PiRandomxelRandom(uint32_t seed) { _SetSeed(seed); }
+    Random(uint32_t seed) { _SetSeed(seed); }
 
     void Set(uint32_t seed) { _SetSeed(seed); }
     uint32_t Get() { return _GetRandom(); }
