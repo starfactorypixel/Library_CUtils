@@ -1,11 +1,11 @@
 {
-  "name": "HelpersLibrary",
+  "name": "C utils library",
   "description": "Library with helper classes",
   "version": "0.0.1",
   "repository":
   {
       "type": "git",
-      "url": "https://github.com/starfactorypixel/HelpersLibrary.git"
+      "url": "https://github.com/starfactorypixel/Library_CUtils.git"
   },
-  "headers": "HelpersLibrary.h"
+  "headers": "CUtils.h"
 }
