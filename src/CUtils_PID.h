@@ -14,13 +14,21 @@ class PIDController
 		{
 			T error = setpoint - measured_value;			// Вычисление ошибки
 			T derivative = (error - _previous_error) / dt;	// Производная часть
-			_integral += error * dt;							// Интегральная часть
+			_integral += error * dt;						// Интегральная часть
 			_previous_error = error;
 			
 			// Рассчитываем выход
 			T output = _kp * error + _ki * _integral + _kd * derivative;
 			
 			return output;
+		}
+		
+		void Reset()
+		{
+			_integral = (T)0;
+			_previous_error = (T)0;
+			
+			return;
 		}
 		
 	private:
