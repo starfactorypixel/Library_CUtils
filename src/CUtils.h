@@ -6,4 +6,5 @@
 
 #include "CUtils_Analog.h"
 #include "CUtils_String.h"
+#include "CUtils_Math.h"
 #include "CUtils_PID.h"
