@@ -6,3 +6,18 @@ T clamp(T value, T min, T max)
 {
 	return (value < min) ? min : (value > max) ? max : value;
 }
+
+template <typename T> 
+T map(T input, T input_min, T input_max, T output_min, T output_max)
+{
+	return (((input - input_min) * (output_max - output_min)) / (input_max - input_min)) + output_min;
+}
+
+template <typename T> 
+T map_clump(T input, T input_min, T input_max, T output_min, T output_max)
+{
+	if(input < input_min) input = input_min;
+	if(input > input_max) input = input_max;
+	
+	return (((input - input_min) * (output_max - output_min)) / (input_max - input_min)) + output_min;
+}
