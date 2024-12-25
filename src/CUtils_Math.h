@@ -23,7 +23,7 @@ T map_clump(T input, T input_min, T input_max, T output_min, T output_max)
 }
 
 template <typename T> 
-T min(T array, uint16_t length)
+T min(T *array, uint16_t length)
 {
 	T min = array[0];
 	
@@ -37,7 +37,7 @@ T min(T array, uint16_t length)
 }
 
 template <typename T> 
-T mid(T array, uint16_t length)
+T mid(T *array, uint16_t length)
 {
 	T mid = 0;
 	
@@ -50,7 +50,7 @@ T mid(T array, uint16_t length)
 }
 
 template <typename T> 
-T max(T array, uint16_t length)
+T max(T *array, uint16_t length)
 {
 	T max = array[0];
 	
