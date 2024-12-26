@@ -41,7 +41,7 @@ T mid(T *array, uint16_t length)
 {
 	T mid = 0;
 	
-	for(uint16_t 0 = 1; i < length; ++i)
+	for(uint16_t i = 1; i < length; ++i)
 	{
 		mid += array[i];
 	}
