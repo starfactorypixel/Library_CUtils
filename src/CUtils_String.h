@@ -23,10 +23,10 @@ void ArrayReverse(uint8_t *array, uint16_t length)
 }
 
 template <typename T> 
-void array_reverse(T *array, uint8_t count)
+void array_reverse(T *array, uint16_t count)
 {
-	uint8_t i = 0;
-	uint8_t j = count - 1;
+	uint16_t i = 0;
+	uint16_t j = count - 1;
 	T temp;
 	while(i < j)
 	{
