@@ -9,3 +9,4 @@
 #include "CUtils_Math.h"
 #include "CUtils_PID.h"
 #include "CUtils_CollectionStream.h"
+#include "CUtils_Logic.h"
