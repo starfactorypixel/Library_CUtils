@@ -11,3 +11,4 @@
 #include "CUtils_CollectionStream.h"
 #include "CUtils_MovingAverage.h"
 #include "CUtils_Logic.h"
+#include "CUtils_CRC16.h"
