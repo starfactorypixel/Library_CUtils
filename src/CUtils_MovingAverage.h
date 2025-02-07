@@ -48,6 +48,7 @@ class MovingAverage
 		{
 			T1 buffer[_size];
 			T2 sum;
+			uint8_t idx;
 		} _data;
 		
 };
