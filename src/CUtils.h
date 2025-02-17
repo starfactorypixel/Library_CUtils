@@ -4,6 +4,8 @@
 //#include "CUtils_Random_STM32.h"
 #endif
 
+#define sizeofarray(arr)	(sizeof(arr) / sizeof((arr)[0]))
+
 #include "CUtils_Analog.h"
 #include "CUtils_String.h"
 #include "CUtils_Math.h"
