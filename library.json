@@ -7,5 +7,5 @@
       "type": "git",
       "url": "https://github.com/starfactorypixel/Library_CUtils.git"
   },
-  "headers": "CUtils.h"
+  "headers": ["CUtils.h", "CUtils_Perlin2DInt.h"]
 }
