@@ -2,13 +2,16 @@
 #include <inttypes.h>
 
 
-struct volt_calc_t
+struct [[deprecated("Use DividerVoltageCalc class")]] volt_calc_t
 {
 	uint16_t maxadc;	// Максимальное значение АЦП, указываем как ((1 << bits) - 1)
 	uint16_t vref;		// Опорное напряжение, мВ
-	uint32_t r1 = 0;	// Верхний резистор делителя, Ом
-	uint32_t r2 = 1;	// Нижний резистор делителя, Ом
-	int16_t adj = 0;	// Коррекция в промилле
+	uint32_t r1;		// Верхний резистор делителя, Ом
+	uint32_t r2;		// Нижний резистор делителя, Ом
+	int16_t adj;		// Коррекция в промилле
+
+	volt_calc_t(uint16_t m, uint16_t v, uint32_t r1_, uint32_t r2_, int16_t a)
+        : maxadc(m), vref(v), r1(r1_), r2(r2_), adj(a) {}
 };
 
 // Структура расчёта тока через шунт + INA180
@@ -37,6 +40,7 @@ struct INACurrentCalc
 	}
 };
 
+[[deprecated("Use DividerVoltageCalc class")]]
 uint32_t VoltageCalculate(const uint32_t adc, const volt_calc_t &params)
 {
 	const uint32_t dividerCoefficient = ((params.r1 + params.r2) * 1000) / params.r2;
@@ -49,3 +53,61 @@ uint32_t VoltageCalculate(const uint32_t adc, const volt_calc_t &params)
 	
 	return inputVoltage;
 }
+
+
+
+
+
+
+
+
+class DividerVoltageCalc
+{
+	static constexpr uint16_t _shift = 16;
+	
+	public:
+		
+		constexpr DividerVoltageCalc(uint16_t adc_bit, uint16_t vref, uint32_t r1, uint32_t r2) : 
+			_max_adc((1U << adc_bit) - 1U), _vref(vref), _r1(r1), _r2(r2), 
+			_k( (((uint64_t)vref * (r1 + r2) << _shift) + (r2 * _max_adc) / 2) / (r2 * _max_adc) )
+		{}
+		
+		void SetAdcBits(uint8_t adc_bit)
+		{
+			_max_adc = ((1U << adc_bit) - 1U);
+		}
+		
+		void SetVref(uint16_t vref)
+		{
+			_vref = vref;
+		}
+		
+		void SetR1(uint32_t r1)
+		{
+			_r1 = r1;
+		}
+		
+		void SetR2(uint32_t r2)
+		{
+			_r2 = r2;
+		}
+
+		void ReCalc()
+		{
+			_k = (((uint64_t)_vref * (_r1 + _r2) << _shift) + (_r2 * _max_adc) / 2) / (_r2 * _max_adc);
+		}
+		
+		inline uint32_t Getmv(uint32_t adc) const
+		{
+			return (adc * _k) >> _shift;
+		}
+		
+	private:
+		
+		uint16_t _max_adc;
+		uint16_t _vref;
+		uint32_t _r1;
+		uint32_t _r2;
+		uint32_t _k;
+};
+
