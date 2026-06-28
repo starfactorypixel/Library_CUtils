@@ -28,7 +28,7 @@ private:
 
 public:
     // запись в буфер, возвращает true если значение записано
-    inline bool Write(DATA_T value)
+    inline bool Write(DATA_T value) noexcept
     {
         if (IsFull())
             return false;
@@ -40,7 +40,7 @@ public:
     }
 
     // чтение из буфера, возвращает true если значение прочитано
-    inline bool Read(DATA_T &value)
+    inline bool Read(DATA_T &value) noexcept
     {
         if (IsEmpty())
             return false;
@@ -64,13 +64,13 @@ public:
     }
 
     // количество элементов в буфере
-    RingBufferIndex_T Count() const
+    inline RingBufferIndex_T Count() const noexcept
     {
         return (_head - _tail) & _mask;
     }
 
     // очистить буфер
-    inline void Clear()
+    inline void Clear() const noexcept
     {
         _tail = 0;
         _head = 0;
