@@ -51,6 +51,28 @@ public:
         return true;
     }
 
+    // читает из буфера без удаления элемента
+    inline bool Peek(DATA_T &value) noexcept
+    {
+        if (IsEmpty())
+            return false;
+
+        value = _data[_tail];
+
+        return true;
+    }
+
+    // удаляет очередной элемент из буфера
+    inline bool DeleteOne() noexcept
+    {
+        if (IsEmpty())
+            return false;
+
+        _tail = nextIndex(_tail);
+
+        return true;
+    }
+
     // пуст ли буфер
     inline bool IsEmpty() const noexcept
     {
