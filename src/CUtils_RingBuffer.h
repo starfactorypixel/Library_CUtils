@@ -92,7 +92,7 @@ public:
     }
 
     // очистить буфер
-    inline void Clear() const noexcept
+    inline void Clear() noexcept
     {
         _tail = 0;
         _head = 0;
