@@ -158,3 +158,12 @@ class DividerVoltageCalc
 		uint16_t _correction;
 		uint32_t _k;
 };
+
+int16_t GetF103Temperature(uint16_t adc, uint16_t vref_mv)
+{
+	// V25 1.43 V, Avg_Slope 4.3 mV/°C
+	
+	uint32_t v_sense_mv_x10 = ((uint32_t)adc * vref_mv * 10) / 4096;
+	int32_t temp_x10 = (((14300 - (int32_t)v_sense_mv_x10) * 10) / 43) + 250;
+	return (int16_t)temp_x10;
+}
