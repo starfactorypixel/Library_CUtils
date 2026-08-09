@@ -56,3 +56,62 @@ class PIDController
 
 
 };
+
+template <typename T> 
+class PIDController2
+{
+	public:
+		PIDController2(T kp, T ki, T kd, T out_min, T out_max) : 
+			_kp(kp), _ki(ki), _kd(kd), _out_min(out_min), _out_max(out_max), 
+			_integral{}, _previous_measurement{}, _first_run(true)
+		{
+
+		}
+
+		T Calculate(T setpoint, T measured_value, T dt)
+		{
+			if(dt <= T{}) return T{};
+			
+			const T error = setpoint - measured_value;
+			T derivative = T{};
+			
+			if(!_first_run)
+			{
+				derivative = -(measured_value - _previous_measurement) / dt;
+			}
+			_first_run = false;
+			_previous_measurement = measured_value;
+			
+			const T p = _kp * error;
+			const T d = _kd * derivative;
+			
+			T i = _ki * _integral;
+			T output = p + i + d;
+			
+			const bool upper_saturated = (output >= _out_max) && (error > T{});
+			const bool lower_saturated = (output <= _out_min) && (error < T{});
+			if(!(upper_saturated || lower_saturated))
+			{
+				_integral += error * dt;
+				i = _ki * _integral;
+				output = p + i + d;
+			}
+			
+			return clamp(output, _out_min, _out_max);
+		}
+		
+		void Reset()
+		{
+			_integral = T{};
+			_previous_measurement = T{};
+			_first_run = true;
+		}
+	
+	private:
+	
+		T _kp, _ki, _kd;
+		T _out_min, _out_max;
+		T _integral;
+		T _previous_measurement;
+		bool _first_run;
+};
