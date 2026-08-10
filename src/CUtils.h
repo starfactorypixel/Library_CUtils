@@ -15,3 +15,4 @@
 #include "CUtils_Logic.h"
 #include "CUtils_CRC16.h"
 #include "CUtils_RingBuffer.h"
+#include "CUtils_Crypto.h"
